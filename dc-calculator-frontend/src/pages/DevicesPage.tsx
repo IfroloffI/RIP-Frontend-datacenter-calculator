@@ -43,8 +43,11 @@ export function DevicesPage() {
             <Breadcrumbs crumbs={[{ label: ROUTE_LABELS.DEVICES }]} />
             <Row className="align-items-center justify-content-center mb-4">
                 <Col xs={12} md="auto" className="mb-2 mb-md-0">
-                    <h1 className="page-title mb-0">Список оборудования</h1>
+                    <h1 className="page-title mb-4">Список оборудования</h1>
                 </Col>
+            </Row>
+
+            <Row className="align-items-center justify-content-center mb-4">
 
                 <Col xs={12} md className="mb-2 mb-md-0">
                     <SearchInput
