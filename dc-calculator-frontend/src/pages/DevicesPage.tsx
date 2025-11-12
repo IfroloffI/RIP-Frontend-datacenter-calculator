@@ -1,4 +1,4 @@
-import { Button, Container, Spinner, Row, Col, Card } from "react-bootstrap";
+import { Button, Container, Spinner, Row, Col, Image } from "react-bootstrap";
 import { Breadcrumbs } from "../components/Breadcrumbs";
 import { ROUTE_LABELS } from "../lib/routes";
 import { SearchInput } from "../components/SearchInput";
@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { DeviceCard } from "../components/DeviceCard";
 import type { Device } from "../lib/types";
 import { getDevices } from "../modules/api";
+import basketIcon from "../assets/basket.png";
 
 export function DevicesPage() {
     const [query, setQuery] = useState('');
@@ -40,18 +41,35 @@ export function DevicesPage() {
     return (
         <Container>
             <Breadcrumbs crumbs={[{ label: ROUTE_LABELS.DEVICES }]} />
-
-            <Row className="mb-4">
-                <Col>
-                    <h1 className="page-title">Список оборудования</h1>
+            <Row className="align-items-center justify-content-center mb-4">
+                <Col xs={12} md="auto" className="mb-2 mb-md-0">
+                    <h1 className="page-title mb-0">Список оборудования</h1>
                 </Col>
-                <Col xs={12}>
+
+                <Col xs={12} md className="mb-2 mb-md-0">
                     <SearchInput
                         value={query}
                         onChange={setQuery}
                         onSubmit={handleSearch}
                         onClear={handleClear}
                     />
+                </Col>
+
+                <Col xs={12} md="auto" className="text-md-end">
+                    <div
+                        className="d-inline-flex align-items-center gap-2"
+                        style={{ cursor: "default" }}
+                        title="Ваша заявка (корзина)"
+                    >
+                        <Image
+                            src={basketIcon}
+                            alt="Корзина"
+                            width={28}
+                            height={28}
+                            className="rounded"
+                        />
+                        <span className="badge bg-primary rounded-pill">0</span>
+                    </div>
                 </Col>
             </Row>
 
@@ -62,7 +80,7 @@ export function DevicesPage() {
             ) : devices.length > 0 ? (
                 <Row className="g-3">
                     {devices.map((device) => (
-                        <Col key={device.id} xs={18} sm={9} lg={6} xl={4} className="mb-4">
+                        <Col key={device.id} xs={12} sm={6} md={6} lg={4} xl={3} className="mb-4">
                             <DeviceCard
                                 device={device}
                                 onDetailsClick={() => navigate(`/devices/${device.id}`)}
