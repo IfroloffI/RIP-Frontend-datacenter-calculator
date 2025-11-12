@@ -1,0 +1,29 @@
+.breadcrumbs {
+    list-style: none;
+    padding: 20px 0;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.breadcrumbs * {
+    color: #666;
+}
+
+.breadcrumbs li:last-child {
+    color: #0072ce;
+    font-weight: 500;
+}
+
+.breadcrumbs a {
+    text-decoration: none;
+    color: #0072ce;
+}
+
+.breadcrumbs a:hover {
+    text-decoration: underline;
+}
+
+.breadcrumbs .separator {
+    color: #999;
+}
