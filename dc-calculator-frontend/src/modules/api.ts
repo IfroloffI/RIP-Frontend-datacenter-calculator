@@ -2,16 +2,17 @@ import type { Device } from '../lib/types';
 import { MOCK_DEVICES } from './mock';
 import placeholder from '../assets/placeholder.jpeg';
 
-export const MINIO_URL = 'http://localhost:8050';
+export const MINIO_URL = 'http://192.168.1.42:8050';
+const API_BASE = 'http://192.168.1.42:8080';
 
 export function resolveImageUrl(relativePath: string | null | undefined): string {
   if (!relativePath) return placeholder;
-  return `${MINIO_URL}/${relativePath}`;
+  return `${relativePath}`;
 }
 
 export async function getDevices(q = ''): Promise<Device[]> {
   try {
-    const url = q ? `/api/devices?q=${encodeURIComponent(q)}` : '/api/devices';
+    const url = q ? `${API_BASE}/api/devices?q=${encodeURIComponent(q)}` : '/api/devices';
     const res = await fetch(url);
     if (!res.ok) throw new Error();
     return (await res.json()) as Device[];
@@ -25,7 +26,7 @@ export async function getDevices(q = ''): Promise<Device[]> {
 
 export async function getDeviceById(id: number): Promise<Device> {
   try {
-    const res = await fetch(`/api/devices/${id}`);
+    const res = await fetch(`${API_BASE}/api/devices/${id}`);
     if (!res.ok) throw new Error();
     return (await res.json()) as Device;
   } catch {
