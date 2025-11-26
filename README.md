@@ -1,2 +1,2 @@
-# RIP-Frontend-datacenter-calculator
+# dc-calculator-frontend
 Репозиторий Курса РИП (Frontend)

@@ -6,7 +6,7 @@ import { DeviceDetailPage } from './pages/DeviceDetailPage';
 
 export default function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/dc-calculator-frontend">
       <AppNavbar />
       <main className="main">
         <Routes>
