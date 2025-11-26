@@ -18,7 +18,7 @@ export default defineConfig({
       },
       manifest: {
         name: 'DC Calculator',
-        short_name: 'DCCalc',
+        short_name: 'DC Calc',
         start_url: '/dc-calculator-frontend/',
         scope: '/dc-calculator-frontend/',
         display: 'standalone',
@@ -27,13 +27,13 @@ export default defineConfig({
         description: 'Калькулятор мощности дата-центра',
         icons: [
           {
-            src: 'assets/pwa-192.png',
+            src: '/pwa-192.png',
             sizes: '192x192',
             type: 'image/png',
             purpose: 'any',
           },
           {
-            src: 'assets/pwa-512.png',
+            src: '/pwa-512.png',
             sizes: '512x512',
             type: 'image/png',
             purpose: 'any',
