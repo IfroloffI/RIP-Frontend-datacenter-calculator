@@ -337,3 +337,10 @@ body {
         right: 30px !important;
     }
 }
+
+@media (max-width: 768px) {
+    .position-fixed {
+        bottom: 10px !important;
+        right: 20px !important;
+    }
+}
