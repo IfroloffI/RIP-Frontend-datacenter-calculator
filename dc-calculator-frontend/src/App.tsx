@@ -3,10 +3,11 @@ import { AppNavbar } from './components/Navbar';
 import { HomePage } from './pages/HomePage';
 import { DevicesPage } from './pages/DevicesPage';
 import { DeviceDetailPage } from './pages/DeviceDetailPage';
+import { BASENAME } from './target_config';
 
 export default function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={BASENAME}>
       <AppNavbar />
       <main className="main">
         <Routes>
