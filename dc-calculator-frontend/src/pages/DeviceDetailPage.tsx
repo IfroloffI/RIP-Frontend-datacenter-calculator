@@ -56,7 +56,6 @@ export function DeviceDetailPage() {
                     { label: device.name },
                 ]}
             />
-
             <div className="device-detail">
                 <div className="device-detail-image">
                     <img
@@ -65,6 +64,7 @@ export function DeviceDetailPage() {
                         onError={(e) => {
                             (e.target as HTMLImageElement).src = placeholder;
                         }}
+                        style={{ maxHeight: '400px', width: 'auto' }}
                     />
                 </div>
                 <div className="device-detail-info">

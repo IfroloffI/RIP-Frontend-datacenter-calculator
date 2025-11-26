@@ -1,3 +1,5 @@
+// !!! DEPRECATED !!!
+/*
 import { Form, Button } from 'react-bootstrap';
 import { useEffect, useRef } from 'react';
 
@@ -94,4 +96,4 @@ export function SearchInput({ value, onChange, onSubmit, onClear }: SearchInputP
             </Button>
         </Form>
     );
-}
+}*/

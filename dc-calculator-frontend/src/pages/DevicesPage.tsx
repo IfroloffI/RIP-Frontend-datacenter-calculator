@@ -1,19 +1,26 @@
-import { Button, Container, Spinner, Row, Col, Image } from "react-bootstrap";
+import { Container, Spinner, Row, Col, Image, Form, Button } from "react-bootstrap";
 import { Breadcrumbs } from "../components/Breadcrumbs";
 import { ROUTE_LABELS } from "../lib/routes";
-import { SearchInput } from "../components/SearchInput";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { DeviceCard } from "../components/DeviceCard";
 import type { Device } from "../lib/types";
 import { getDevices } from "../modules/api";
 import basketIcon from "../assets/basket.png";
+import { useSelector, useDispatch } from 'react-redux';
+import { setQuery, clearQuery } from '../features/filter/filterSlice';
+import type { RootState } from '../store';
 
 export function DevicesPage() {
-    const [query, setQuery] = useState('');
+    const dispatch = useDispatch();
+    const query = useSelector((state: RootState) => state.filter.query);
     const [devices, setDevices] = useState<Device[]>([]);
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        loadDevices(query);
+    }, []);
 
     const loadDevices = async (searchQuery = '') => {
         setLoading(true);
@@ -25,72 +32,105 @@ export function DevicesPage() {
         }
     };
 
-    useEffect(() => {
-        loadDevices();
-    }, []);
-
-    const handleSearch = () => {
+    const handleSearch = (e?: React.FormEvent) => {
+        e?.preventDefault();
         loadDevices(query);
     };
 
     const handleClear = () => {
-        setQuery('');
+        dispatch(clearQuery());
         loadDevices('');
+    };
+
+    const handleChange = (val: string) => {
+        dispatch(setQuery(val));
     };
 
     return (
         <Container>
             <Breadcrumbs crumbs={[{ label: ROUTE_LABELS.DEVICES }]} />
+
             <Row className="align-items-center justify-content-center mb-4">
                 <Col xs={12} md="auto" className="mb-2 mb-md-0">
                     <h1 className="page-title mb-4">Список оборудования</h1>
                 </Col>
             </Row>
 
-            <Row className="align-items-center justify-content-center mb-4">
-
-                <Col xs={12} md className="mb-2 mb-md-0">
-                    <SearchInput
+            <Form
+                className="search-form mb-4"
+                onSubmit={handleSearch}
+            >
+                <div className="d-grid gap-2" style={{ maxWidth: '600px', margin: '0 auto' }}>
+                    <Form.Control
+                        type="text"
                         value={query}
-                        onChange={setQuery}
-                        onSubmit={handleSearch}
-                        onClear={handleClear}
+                        onChange={(e) => handleChange(e.target.value)}
+                        placeholder="Поиск по названию или категории..."
                     />
-                </Col>
+                    <Button type="submit" variant="primary">
+                        Найти
+                    </Button>
+                    {query && (
+                        <Button
+                            type="button"
+                            variant="outline-secondary"
+                            onClick={handleClear}
+                        >
+                            Очистить
+                        </Button>
+                    )}
+                </div>
+            </Form>
 
-                <Col xs={12} md="auto" className="text-md-end">
-                    <div
-                        className="d-inline-flex align-items-center gap-2"
-                        style={{ cursor: "default" }}
-                        title="Ваша заявка (корзина)"
+            <div
+                className="position-fixed"
+                style={{
+                    bottom: '16px',
+                    right: '16px',
+                    zIndex: 1030,
+                }}
+            >
+                <div
+                    className="d-flex align-items-center justify-content-center"
+                    style={{
+                        width: '128px',
+                        height: '128px',
+                        borderRadius: '50%',
+                        backgroundColor: '#0072ce',
+                        boxShadow: '0 4px 8px rgba(0,0,0,0.2)',
+                    }}
+                >
+                    <Image
+                        src={basketIcon}
+                        alt="Корзина"
+                        width={64}
+                        height={64}
+                        className="text-white"
+                        style={{ filter: 'brightness(0) invert(1)' }}
+                    />
+                    <span
+                        className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                        style={{ fontSize: '1.5rem', padding: '4px 6px' }}
                     >
-                        <Image
-                            src={basketIcon}
-                            alt="Корзина"
-                            width={28}
-                            height={28}
-                            className="rounded"
-                        />
-                        <span className="badge bg-primary rounded-pill">0</span>
-                    </div>
-                </Col>
-            </Row>
+                        0
+                    </span>
+                </div>
+            </div>
 
             {loading ? (
                 <div className="text-center py-5">
                     <Spinner animation="border" variant="primary" />
                 </div>
             ) : devices.length > 0 ? (
-                <Row className="g-3">
+                <div className="devices-grid">
                     {devices.map((device) => (
-                        <Col key={device.id} xs={12} sm={6} md={6} lg={4} xl={3} className="mb-4">
-                            <DeviceCard
-                                device={device}
-                                onDetailsClick={() => navigate(`/devices/${device.id}`)}
-                            />
-                        </Col>
+                        <DeviceCard
+                            key={device.id}
+                            device={device}
+                            onDetailsClick={() => navigate(`/devices/${device.id}`)}
+                        />
                     ))}
-                </Row>
+                </div>
             ) : (
                 <div className="text-center py-5">
                     <p>Оборудование не найдено</p>
