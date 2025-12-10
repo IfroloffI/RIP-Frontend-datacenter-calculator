@@ -12,7 +12,7 @@ export function resolveImageUrl(relativePath: string | null | undefined): string
 
 export async function getDevices(q = ''): Promise<Device[]> {
   try {
-    const url = q ? `${API_BASE}/api/devices?q=${encodeURIComponent(q)}` : '/api/devices';
+    const url = q ? `${API_BASE}/api/devices?q=${encodeURIComponent(q)}` : `${API_BASE}/api/devices`;
     const res = await fetch(url);
     if (!res.ok) throw new Error();
     return (await res.json()) as Device[];

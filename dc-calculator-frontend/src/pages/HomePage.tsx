@@ -1,6 +1,7 @@
 import { Container, Row, Col, Card } from 'react-bootstrap';
 import { Breadcrumbs } from '../components/Breadcrumbs';
 import { FaDollarSign, FaSeedling, FaBolt } from 'react-icons/fa';
+import dc_hero from '../assets/dc-hero.avif';
 
 export function HomePage() {
     return (
@@ -37,7 +38,7 @@ export function HomePage() {
                         </Col>
                         <Col lg={6} className="text-center mt-4 mt-lg-0">
                             <img
-                                src="/src/assets/dc-hero.avif"
+                                src={dc_hero}
                                 alt="Серверная стойка в дата-центре"
                                 className="img-fluid rounded shadow"
                                 style={{ maxHeight: '400px', width: '100%', objectFit: 'cover' }}
