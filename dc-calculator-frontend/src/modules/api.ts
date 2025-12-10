@@ -2,11 +2,9 @@ import type { CartSummary, Device } from '../lib/types';
 import { MOCK_CART, MOCK_DEVICES } from './mock';
 import placeholder from '../assets/placeholder.jpeg';
 
-export const MINIO_URL = 'http://localhost:8050';
-
 export function resolveImageUrl(relativePath: string | null | undefined): string {
   if (!relativePath) return placeholder;
-  return `${MINIO_URL}/${relativePath}`;
+  return `${relativePath}`;
 }
 
 export async function getDevices(q = ''): Promise<Device[]> {
