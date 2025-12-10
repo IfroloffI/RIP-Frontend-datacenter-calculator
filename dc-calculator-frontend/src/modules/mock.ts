@@ -1,4 +1,4 @@
-import type { Device } from '../lib/types';
+import type { CartSummary, Device } from '../lib/types';
 
 export const MOCK_DEVICES: Device[] = [
   {
@@ -26,3 +26,8 @@ export const MOCK_DEVICES: Device[] = [
     image_url: "dell-me5024.png",
   },
 ];
+
+export const MOCK_CART: CartSummary = {
+  calculation_id: -1,
+  total_items: 0,
+};

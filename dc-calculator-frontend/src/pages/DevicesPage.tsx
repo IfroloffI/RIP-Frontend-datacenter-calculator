@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { DeviceCard } from "../components/DeviceCard";
 import type { Device } from "../lib/types";
-import { getDevices } from "../modules/api";
+import { getCart, getDevices } from "../modules/api";
 import basketIcon from "../assets/basket.png";
 import { useSelector, useDispatch } from 'react-redux';
 import { setQuery, clearQuery } from '../features/filter/filterSlice';
@@ -44,6 +44,15 @@ export function DevicesPage() {
 
     const handleChange = (val: string) => {
         dispatch(setQuery(val));
+    };
+
+    const handleCartClick = async () => {
+        try {
+            const data = await getCart();
+            console.log('cart data in DevicesPage', data);
+        } catch (e) {
+            console.error('failed to load cart', e);
+        }
     };
 
     return (
@@ -99,6 +108,7 @@ export function DevicesPage() {
                         backgroundColor: '#0072ce',
                         boxShadow: '0 4px 8px rgba(0,0,0,0.2)',
                     }}
+                    onClick={handleCartClick}
                 >
                     <Image
                         src={basketIcon}

@@ -1,5 +1,5 @@
-import type { Device } from '../lib/types';
-import { MOCK_DEVICES } from './mock';
+import type { CartSummary, Device } from '../lib/types';
+import { MOCK_CART, MOCK_DEVICES } from './mock';
 import placeholder from '../assets/placeholder.jpeg';
 
 export const MINIO_URL = 'http://localhost:8050';
@@ -32,5 +32,24 @@ export async function getDeviceById(id: number): Promise<Device> {
     const mock = MOCK_DEVICES.find(d => d.id === id);
     if (mock) return mock;
     throw new Error('Not found');
+  }
+}
+
+export async function getCart(): Promise<CartSummary> {
+  try {
+    const res = await fetch('/api/cart', {
+      headers: {},
+    });
+
+    if (!res.ok) {
+      throw new Error(`Cart request failed with status ${res.status}`);
+    }
+
+    const data = (await res.json()) as CartSummary;
+    console.log('cart response', data);
+    return data;
+  } catch (e) {
+    console.error('cart fallback to mock', e);
+    return MOCK_CART;
   }
 }
