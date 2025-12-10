@@ -2,8 +2,6 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
 import mkcert from 'vite-plugin-mkcert';
-import fs from 'fs';
-import path from 'path';
 
 export default defineConfig({
   base: '/dc-calculator-frontend/',
@@ -51,10 +49,10 @@ export default defineConfig({
         target: 'http://localhost:8080',
         changeOrigin: true,
       },
-    },
-    https: {
-      key: fs.readFileSync(path.resolve(__dirname, 'cert.key')),
-      cert: fs.readFileSync(path.resolve(__dirname, 'cert.crt')),
-    },
+      '/devices': {
+        target: 'http://localhost:8050',
+        changeOrigin: true,
+      }
+    }
   },
 });
