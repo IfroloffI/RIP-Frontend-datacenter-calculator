@@ -6,12 +6,19 @@ export const MINIO_URL = 'https://localhost:3000';
 
 export function resolveImageUrl(relativePath: string | null | undefined): string {
   if (!relativePath) return placeholder;
-  return `${MINIO_URL}/${relativePath}`;
+
+  if (/^https?:\/\//i.test(relativePath)) {
+    return relativePath;
+  }
+
+  const cleaned = relativePath.replace(/^\/+/, '');
+
+  return `${MINIO_URL}/${cleaned}`;
 }
 
 export async function getDevices(q = ''): Promise<Device[]> {
   try {
-    const url = q ? `https://localhost:3000/api/devices?q=${encodeURIComponent(q)}` : '/api/devices';
+    const url = q ? `https://localhost:3000/api/devices?q=${encodeURIComponent(q)}` : 'https://localhost:3000/api/devices';
     const res = await fetch(url);
     if (!res.ok) throw new Error();
     return (await res.json()) as Device[];
